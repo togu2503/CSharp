@@ -1,0 +1,8 @@
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\bin\Debug\net48\lab1.exe.config
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\bin\Debug\net48\lab1.exe
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\bin\Debug\net48\lab1.pdb
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\obj\Debug\net48\lab1.csprojAssemblyReference.cache
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\obj\Debug\net48\lab1.AssemblyInfoInputs.cache
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\obj\Debug\net48\lab1.AssemblyInfo.cs
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\obj\Debug\net48\lab1.exe
+D:\OneDrive\Studying\C#\semestr2\lab1\lab1\obj\Debug\net48\lab1.pdb

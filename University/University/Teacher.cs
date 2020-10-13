@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 
-namespace lab1
+namespace University
 {
     class Teacher
     {
-        private long _id;
+        private int _id;
         private string _fullName;
         private string _phone;
         private string _workAddress;
-        private long _postId;
+        private int _postId;
         private string _homeAddress;
         private string _characteristic;
-        public long Id
+        public int Id
         {
             get => _id;
             set => _id = value;
@@ -35,7 +35,7 @@ namespace lab1
             get => _workAddress;
             set => _workAddress = value;
         }
-        public long PostId
+        public int PostId
         {
             get => _postId;
             set => _postId = value;
@@ -63,11 +63,11 @@ namespace lab1
 
         public Teacher(SqlDataReader reader)
         {
-            Id = reader.GetInt64(0);
+            Id = reader.GetInt32(0);
             FullName = reader.GetString(1);
             Phone = reader.GetString(2);
             WorkAddress = reader.GetString(3);
-            PostId = reader.GetInt64(4);
+            PostId = reader.GetInt32(4);
             HomeAddress = reader.GetString(5);
             Characteristic = reader.GetString(6);
         }

@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 
-namespace lab1
+namespace University
 {
     class Program
     {

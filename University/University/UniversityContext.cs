@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 
 namespace University
 {
-    class UniversityContext : DbContext
+    public partial class UniversityContext : DbContext
     {
         public UniversityContext()
         { }
@@ -16,11 +15,19 @@ namespace University
             :base(options)
         { }
 
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Teacher> Posts { get; set; }
-        public DbSet<Teacher> Studies { get; set; }
-        public DbSet<Teacher> TeacherStudyJoints { get; set; }
+        public virtual DbSet<Teacher> Teacher { get; set; }
+        public virtual DbSet<Post> Post { get; set; }
+        public virtual DbSet<Study> Study { get; set; }
+        public virtual DbSet<TeacherStudyJoint> TeacherStudyJoint { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                        .AddJsonFile("appsettings.json")
+                        .Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>(entity =>
@@ -38,20 +45,45 @@ namespace University
             {
                 entity.Property(e => e.FullName)
                     .IsRequired()
-                    .HasColumnType("varchar")
                     .HasMaxLength(128);
                 entity.Property(e => e.Phone)
-                    .HasColumnType("varchar")
-                    .IsRequired();
+                    .HasMaxLength(20);
                 entity.Property(e => e.WorkAddress)
-                    .HasColumnType("varchar")
-                    .IsRequired();
-                entity.HasOne(d => d.PostId)
-                    .WithMany();
+                    .HasMaxLength(128);
+                entity.HasOne(d => d.Post)
+                    .WithMany()
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_teacher_post");
+                entity.Property(e => e.HomeAddress)
+                    .HasMaxLength(128);
+                entity.Property(e => e.Characteristic)
+                    .HasMaxLength(1000);
+            });
 
+            modelBuilder.Entity<Study>(entity =>
+            {
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(128);
+            });
 
-            }
-                )
+            modelBuilder.Entity<TeacherStudyJoint>(entity =>
+            {
+                entity.HasOne(d => d.Teacher)
+                    .WithMany()
+                    .HasForeignKey(d => d.TeacherId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_teacher_id");
+                entity.HasOne(d => d.Study)
+                    .WithMany()
+                    .HasForeignKey(d => d.StudyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_study_id");
+            });
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

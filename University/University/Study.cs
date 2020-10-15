@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 
-namespace Univrsity
+namespace University
 {
-    class Study
+    public partial class Study
     {
         private long _id;
         private string _title;
@@ -23,16 +23,10 @@ namespace Univrsity
             set => _title = value;
         }
 
-        Study(int id, string name)
+        Study(long id, string name)
         {
             Id = id;
             Title = name;
-        }
-
-        Study (SqlDataReader reader)
-        {
-            Id = reader.GetInt32(0);
-            Title = reader.GetString(1);
         }
 
         Study():this(0,"title of study")

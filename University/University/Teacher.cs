@@ -6,16 +6,16 @@ using System.Data.SqlClient;
 
 namespace University
 {
-    class Teacher
+    public partial class Teacher
     {
-        private int _id;
+        private long _id;
         private string _fullName;
         private string _phone;
         private string _workAddress;
-        private int _postId;
+        private long _postId;
         private string _homeAddress;
         private string _characteristic;
-        public int Id
+        public long Id
         {
             get => _id;
             set => _id = value;
@@ -35,7 +35,7 @@ namespace University
             get => _workAddress;
             set => _workAddress = value;
         }
-        public int PostId
+        public long PostId
         {
             get => _postId;
             set => _postId = value;
@@ -50,7 +50,7 @@ namespace University
             get => _characteristic;
             set => _characteristic = value;
         }
-        public Teacher(int id, string fullName, string phone, string workAddress, int postId, string homeAddress, string characteristic)
+        public Teacher(long id, string fullName, string phone, string workAddress, long postId, string homeAddress, string characteristic)
         {
             Id = id;
             FullName = fullName;
@@ -61,16 +61,6 @@ namespace University
             Characteristic = characteristic;
         }
 
-        public Teacher(SqlDataReader reader)
-        {
-            Id = reader.GetInt32(0);
-            FullName = reader.GetString(1);
-            Phone = reader.GetString(2);
-            WorkAddress = reader.GetString(3);
-            PostId = reader.GetInt32(4);
-            HomeAddress = reader.GetString(5);
-            Characteristic = reader.GetString(6);
-        }
         public Teacher() : this(0, "Empty Full Name", "+380(12)3456789", "work adress", 0, "home address", "characteristic")
         { }
 
@@ -93,5 +83,7 @@ namespace University
             res.Append(FullName);
             return res.ToString();
         }
+
+        public virtual Post Post { get; set; }
     }
 }

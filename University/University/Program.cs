@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 
 namespace University
@@ -9,64 +11,40 @@ namespace University
     {
         static void Main(string[] args)
         {
-            string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=university;Integrated Security=True";
-
-            string SqlExpAmountOfTeachers = "SELECT COUNT(id) FROM teacher";
-            string SqlExpAmountOfPosts = "SELECT COUNT(id) FROM post";
-            string SqlExpAmountOfSubjects = "SELECT COUNT(id) FROM study";
-            string SqlExpression1 = "SELECT teacher.* " +
-                "FROM teacher INNER JOIN(" +
-                "SELECT teacher.id " +
-                "FROM teacher INNER JOIN teacher_study_joint ON teacher.id = teacher_study_joint.teacher_id " +
-                "GROUP BY teacher.id " +
-                "HAVING COUNT(study_id) >= 2 ) AS temp ON teacher.id=temp.id";
-            string SqlExpression2 = "SELECT teacher.* FROM teacher INNER JOIN post ON teacher.post_id = post.id WHERE title = 'Доцент'";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (UniversityContext db = new UniversityContext())
             {
-                connection.Open();
+                var teachers = from teacher in db.Teacher.Include(p =>p.Post)
+                               select teacher;
 
-                SqlCommand command1 = new SqlCommand(SqlExpAmountOfTeachers, connection);
-                var countTeachers = command1.ExecuteScalar();
-                Console.WriteLine("Amount of students: {0}", countTeachers);
-
-                SqlCommand command2 = new SqlCommand(SqlExpAmountOfPosts, connection);
-                var countPosts = command2.ExecuteScalar();
-                Console.WriteLine("Amount of teachers: {0}", countPosts);
-
-                SqlCommand command3 = new SqlCommand(SqlExpAmountOfSubjects, connection);
-                var countSubjects = command3.ExecuteScalar();
-                Console.WriteLine("Amount of subjects: {0}", countSubjects);
-
-                SqlCommand command4 = new SqlCommand(SqlExpression1, connection);
-                SqlDataReader reader = command4.ExecuteReader();
+                Console.WriteLine("Teachers, their posts and salary");
+                foreach (var teacher in teachers.ToList())
+                    Console.WriteLine($"{teacher.FullName} {teacher.Post.Title} {teacher.Post.Salary}");
                 Console.WriteLine();
-                Console.WriteLine("Teachers those have 2 or more subjects");
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        Teacher teacher = new Teacher(reader);
-                        Console.WriteLine(teacher.ToShortString());
-                    }
-                }
-                reader.Close();
 
-                SqlCommand command5 = new SqlCommand(SqlExpression2, connection);
-                reader = command5.ExecuteReader();
-                Console.WriteLine();
-                Console.WriteLine("Teachers those have 'Доцент' title");
-                if (reader.HasRows)
+                var query = from joint in db.TeacherStudyJoint
+                                     join teacher in db.Teacher on joint.TeacherId equals teacher.Id
+                                     join study in db.Study on joint.StudyId equals study.Id
+                                     group teacher by new { teacher.Id, teacher.FullName } into grouped
+                                     where grouped.Count() > 1
+                                     select new { Id = grouped.Key.Id, FullName = grouped.Key.FullName , Count = grouped.Count()};
+                Console.WriteLine("Teachers that have more than 1 subject");
+                foreach (var teacher in query.ToList())
                 {
-                    while (reader.Read())
+                    Console.WriteLine($"{teacher.FullName} {teacher.Count} studies:");
+                    var studies = from joint in db.TeacherStudyJoint
+                                  join study in db.Study on joint.StudyId equals study.Id
+                                  where joint.TeacherId == teacher.Id
+                                  select study;
+                    foreach (var study in studies.ToList())
                     {
-                        Teacher teacher = new Teacher(reader);
-                        Console.WriteLine(teacher.ToShortString());
+                        Console.WriteLine($"{study.Title}");
                     }
-                }
-                reader.Close();
 
+                    Console.WriteLine();
+                }
             }
+
+
         }
     }
 }

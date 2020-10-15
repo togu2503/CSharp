@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace University
 {
-    class Post
+    public partial class Post
     {
         private long _id;
         private string _title;
@@ -28,18 +28,11 @@ namespace University
             get => _salary;
             set => _salary = value;
         }
-        public Post(int id,string title, float salary)
+        public Post(long id,string title, float salary)
         {
             Id = id;
             Title = title;
             Salary = salary;
-        }
-
-        public Post(SqlDataReader reader)
-        {
-            Id = reader.GetInt32(0);
-            Title = reader.GetString(1);
-            Salary = reader.GetFloat(2);
         }
 
         public Post():this(0,"Title",0)

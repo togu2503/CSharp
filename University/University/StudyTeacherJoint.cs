@@ -5,12 +5,12 @@ using System.Data.SqlClient;
 
 namespace University
 {
-    class StudyTeacherJoint
+    public partial class TeacherStudyJoint
     {
         private long _id;
         private long _teacherId;
         private long _studyId;
-        private int _hours;
+        private long _hours;
 
         public long Id 
         { 
@@ -27,12 +27,12 @@ namespace University
             get => _studyId;
             set => _studyId = value;
         }
-        public int Hours 
+        public long Hours 
         {
             get => _hours; 
             set => _hours = value; 
         }
-        public StudyTeacherJoint(int id, int teacherId, int studyId, int hours)
+        public TeacherStudyJoint(long id, long teacherId, long studyId, long hours)
         {
             Id = id;
             TeacherId = teacherId;
@@ -40,15 +40,10 @@ namespace University
             Hours = hours;
         }
 
-        public StudyTeacherJoint(SqlDataReader reader)
-        {
-            Id = reader.GetInt64(0);
-            TeacherId = reader.GetInt64(1);
-            StudyId = reader.GetInt64(2);
-            Hours = reader.GetInt32(3);
-        }
-
-        public StudyTeacherJoint():this(0,0,0,0)
+        public TeacherStudyJoint():this(0,0,0,0)
         {}
+
+        public virtual Teacher Teacher { get; set; }
+        public virtual Study Study { get; set; }
     }
 }

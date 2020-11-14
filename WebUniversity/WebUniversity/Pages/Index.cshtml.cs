@@ -18,12 +18,5 @@ namespace WebUniversity.Pages
         {
             _context = context;
         }
-
-        public IList<Post> Post { get;set; }
-
-        public async Task OnGetAsync()
-        {
-            Post = await _context.Post.ToListAsync();
-        }
     }
 }

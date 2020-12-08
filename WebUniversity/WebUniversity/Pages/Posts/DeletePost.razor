@@ -1,0 +1,50 @@
+﻿@page "/deletepost/{id}"
+@inject NavigationManager NavigationManager
+@inject IPostService PostService
+
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete this Post with Id :<b> @id</b></p>
+<br />
+<div class="col-md-4">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@post.Id</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>@post.Title</td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td>@post.Salary</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Cancel" class="btn" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+    Post post = new Post();
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await PostService.SinglePost(Convert.ToInt64(id));
+    }
+
+    protected async Task Delete()
+    {
+        await PostService.DeletePost(Convert.ToInt64(id));
+        NavigationManager.NavigateTo("listposts");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listposts");
+    }
+}   

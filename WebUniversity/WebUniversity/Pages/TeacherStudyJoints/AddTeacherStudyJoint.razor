@@ -1,0 +1,52 @@
+﻿@page "/addteacherstudyjoint"
+@inject NavigationManager NavigationManager
+@inject ITeacherStudyJointService TeacherStudyJointService
+
+<h2>Create TeacherStudyJoint</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@teacherStudyJoint.Id" />
+            </div>
+            <div class="form-group">
+                <label for="TeacherId" class="control-label">TeacherId</label>
+                <input for="TeacherId" class="form-control" @bind="@teacherStudyJoint.TeacherId" />
+            </div>
+            <div class="form-group">
+                <label for="StudyId" class="control-label">StudyId</label>
+                <input for="StudyId" class="form-control" @bind="@teacherStudyJoint.StudyId" />
+            </div>
+            <div class="form-group">
+                <label for="Hours" class="control-label">Hours</label>
+                <input for="Hours" class="form-control" @bind="@teacherStudyJoint.Hours" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateTeacherStudyJoint" value="Save" />
+                <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+
+    TeacherStudyJoint teacherStudyJoint = new TeacherStudyJoint();
+
+    protected async Task CreateTeacherStudyJoint()
+    {
+        await TeacherStudyJointService.CreateTeacherStudyJoint(teacherStudyJoint);
+        NavigationManager.NavigateTo("listteacherstudyjoints");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listteacherstudyjoints");
+    }
+}   

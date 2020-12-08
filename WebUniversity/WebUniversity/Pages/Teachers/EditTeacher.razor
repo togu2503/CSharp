@@ -1,0 +1,70 @@
+﻿@page "/editteacher/{id}"
+@inject NavigationManager NavigationManager
+@inject ITeacherService TeacherService
+
+<h2>Edit Teacher</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@teacher.Id" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="Full Name" class="control-label">Full Name</label>
+                <input for="Full Name" class="form-control" @bind="@teacher.FullName" />
+            </div>
+            <div class="form-group">
+                <label for="Phone" class="control-label">Phone</label>
+                <input for="Phone" class="form-control" @bind="@teacher.Phone" />
+            </div>
+            <div class="form-group">
+                <label for="Work Address" class="control-label">Work Address</label>
+                <input for="Work Address" class="form-control" @bind="@teacher.WorkAddress" />
+            </div>
+            <div class="form-group">
+                <label for="PostId" class="control-label">PostId</label>
+                <input for="PostId" class="form-control" @bind="@teacher.PostId" />
+            </div>
+            <div class="form-group">
+                <label for="Home Address" class="control-label">Home Address</label>
+                <input for="Home Address" class="form-control" @bind="@teacher.HomeAddress" />
+            </div>
+            <div class="form-group">
+                <label for="Characteristic" class="control-label">Characteristic</label>
+                <input for="Characteristic" class="form-control" @bind="@teacher.Characteristic" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdateTeacher" value="Update" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    Teacher teacher = new Teacher();
+
+    protected override async Task OnInitializedAsync()
+    {
+        teacher = await TeacherService.SingleTeacher(Convert.ToInt64(id));
+    }
+
+    protected async Task UpdateTeacher()
+    {
+        await TeacherService.EditTeacher(Convert.ToInt64(id), teacher);
+        NavigationManager.NavigateTo("listteachers");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listteachers");
+    }
+}   

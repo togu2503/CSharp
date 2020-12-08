@@ -1,0 +1,66 @@
+﻿@page "/deleteteacher/{id}"
+@inject NavigationManager NavigationManager
+@inject ITeacherService TeacherService
+
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete this Teacher with Id :<b> @id</b></p>
+<br />
+<div class="col-md-4">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@teacher.Id</td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td>@teacher.FullName</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>@teacher.Phone</td>
+        </tr>
+        <tr>
+            <td>Work Address</td>
+            <td>@teacher.WorkAddress</td>
+        </tr>
+        <tr>
+            <td>PostId</td>
+            <td>@teacher.PostId</td>
+        </tr>
+        <tr>
+            <td>Home Address</td>
+            <td>@teacher.HomeAddress</td>
+        </tr>
+        <tr>
+            <td>Characteristic </td>
+            <td>@teacher.Characteristic</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Cancel" class="btn" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+    Teacher teacher = new Teacher();
+
+    protected override async Task OnInitializedAsync()
+    {
+        teacher = await TeacherService.SingleTeacher(Convert.ToInt64(id));
+    }
+
+    protected async Task Delete()
+    {
+        await TeacherService.DeleteTeacher(Convert.ToInt64(id));
+        NavigationManager.NavigateTo("listteachers");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listteachers");
+    }
+}   

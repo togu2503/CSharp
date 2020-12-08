@@ -1,0 +1,58 @@
+﻿@page "/editteacherstudyjoint/{id}"
+@inject NavigationManager NavigationManager
+@inject ITeacherStudyJointService TeacherStudyJointService
+
+<h2>Edit TeacherStudyJoint</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@teacherStudyJoint.Id" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="TeacherId" class="control-label">TeacherId</label>
+                <input for="TeacherId" class="form-control" @bind="@teacherStudyJoint.TeacherId" />
+            </div>
+            <div class="form-group">
+                <label for="StudyId" class="control-label">StudyId</label>
+                <input for="StudyId" class="form-control" @bind="@teacherStudyJoint.StudyId" />
+            </div>
+            <div class="form-group">
+                <label for="Hours" class="control-label">Hours</label>
+                <input for="Hours" class="form-control" @bind="@teacherStudyJoint.Hours" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdateTeacherStudyJoint" value="Update" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    TeacherStudyJoint teacherStudyJoint = new TeacherStudyJoint();
+
+    protected override async Task OnInitializedAsync()
+    {
+        teacherStudyJoint = await TeacherStudyJointService.SingleTeacherStudyJoint(Convert.ToInt64(id));
+    }
+
+    protected async Task UpdateTeacherStudyJoint()
+    {
+        await TeacherStudyJointService.EditTeacherStudyJoint(Convert.ToInt64(id), teacherStudyJoint);
+        NavigationManager.NavigateTo("listteacherstudyjoints");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listteacherstudyjoints");
+    }
+}   

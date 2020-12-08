@@ -1,0 +1,50 @@
+﻿@page "/listteacherstudyjoints"
+@inject ITeacherStudyJointService TeacherStudyJointService
+
+<h2>TeacherStudyJoints</h2>
+<p>
+    <a href="/addteacherstudyjoint">Create New TeacherStudyJoint</a>
+</p>
+@if (teacherStudyJoints == null)
+{
+    <p>Loading page...</p>
+}
+else
+{
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Teacher</th>
+                <th>Study</th>
+                <th>Hours</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var joint in teacherStudyJoints)
+            {
+            <tr>
+                <td>@joint.Id</td>
+                <td>@joint.Teacher.FullName</td>
+                <td>@joint.Study.Title</td>
+                <td>@joint.Hours</td>
+                <td>
+                    <a href='/editteacherstudyjoint/@joint.Id'>Edit</a>
+                    <a href='/deleteteacherstudyjoint/@joint.Id'>Delete</a>
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<TeacherStudyJoint> teacherStudyJoints;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teacherStudyJoints = await TeacherStudyJointService.GetTeacherStudyJoints();
+    }
+}   

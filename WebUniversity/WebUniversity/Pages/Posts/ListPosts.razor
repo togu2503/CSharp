@@ -1,0 +1,48 @@
+﻿@page "/listposts"
+@inject IPostService PostService
+
+<h2>Posts</h2>
+<p>
+    <a href="/addpost">Create New Post</a>
+</p>
+@if (posts == null)
+{
+    <p>Loading page...</p>
+}
+else
+{
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in posts)
+            {
+                <tr>
+                    <td>@post.Id</td>
+                    <td>@post.Title</td>
+                    <td>@post.Salary</td>
+                    <td>
+                        <a href='/editpost/@post.Id'>Edit</a>
+                        <a href='/deletepost/@post.Id'>Delete</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Post> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostService.GetPosts();
+    }
+}   

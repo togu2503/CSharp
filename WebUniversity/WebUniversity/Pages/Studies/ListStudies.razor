@@ -1,0 +1,46 @@
+﻿@page "/liststudies"
+@inject IStudyService StudyService
+
+<h2>Studies</h2>
+<p>
+    <a href="/addstudy">Create New Study</a>
+</p>
+@if (studies == null)
+{
+    <p>Loading page...</p>
+}
+else
+{
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var study in studies)
+            {
+                <tr>
+                    <td>@study.Id</td>
+                    <td>@study.Title</td>
+                    <td>
+                        <a href='/editstudy/@study.Id'>Edit</a>
+                        <a href='/deletestudy/@study.Id'>Delete</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Study> studies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        studies = await StudyService.GetStudies();
+    }
+}   

@@ -1,0 +1,54 @@
+﻿@page "/editpost/{id}"
+@inject NavigationManager NavigationManager
+@inject IPostService PostService
+
+<h2>Edit Post</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@post.Id" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="Title" class="control-label">Title</label>
+                <input for="Title" class="form-control" @bind="@post.Title" />
+            </div>
+            <div class="form-group">
+                <label for="Salary" class="control-label">Salary</label>
+                <input for="Salary" class="form-control" @bind="@post.Salary" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdatePost" value="Update" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    Post post = new Post();
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await PostService.SinglePost(Convert.ToInt64(id));
+    }
+
+    protected async Task UpdatePost()
+    {
+        await PostService.EditPost(Convert.ToInt64(id), post);
+        NavigationManager.NavigateTo("listposts");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listposts");
+    }
+}   

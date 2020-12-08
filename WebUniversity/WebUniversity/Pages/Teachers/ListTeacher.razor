@@ -1,0 +1,56 @@
+﻿@page "/listteachers"
+@inject ITeacherService TeacherService
+
+<h2>Teachers</h2>
+<p>
+    <a href="/addteacher">Create New Teacher</a>
+</p>
+@if (teachers == null)
+{
+    <p>Loading page...</p>
+}
+else
+{
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Phone</th>
+                <th>Work Address</th>
+                <th>Post</th>
+                <th>Home Address</th>
+                <th>Characteristic</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in teachers)
+            {
+            <tr>
+                <td>@teacher.Id</td>
+                <td>@teacher.FullName</td>
+                <td>@teacher.Phone</td>
+                <td>@teacher.WorkAddress</td>
+                <td>@teacher.Post.Title</td>
+                <td>@teacher.HomeAddress</td>
+                <td>@teacher.Characteristic</td>
+                <td>
+                    <a href='/editteacher/@teacher.Id'>Edit</a>
+                    <a href='/deleteteacher/@teacher.Id'>Delete</a>
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Teacher> teachers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teachers = await TeacherService.GetTeachers();
+    }
+}   

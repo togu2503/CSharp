@@ -1,0 +1,44 @@
+﻿@page "/addstudy"
+@inject NavigationManager NavigationManager
+@inject IStudyService StudyService
+
+<h2>Create Study</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@study.Id" />
+            </div>
+            <div class="form-group">
+                <label for="Title" class="control-label">Title</label>
+                <input for="Title" class="form-control" @bind="@study.Title" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateStudy" value="Save" />
+                <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+
+    Study study = new Study();
+
+    protected async Task CreateStudy()
+    {
+        await StudyService.CreateStudy(study);
+        NavigationManager.NavigateTo("liststudies");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("liststudies");
+    }
+}   

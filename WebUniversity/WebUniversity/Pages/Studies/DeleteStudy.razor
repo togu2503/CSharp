@@ -1,0 +1,46 @@
+﻿@page "/deletestudy/{id}"
+@inject NavigationManager NavigationManager
+@inject IStudyService StudyService
+
+<h2>Confirm Delete</h2>
+<p>Are you sure you want to delete this Study with Id :<b> @id</b></p>
+<br />
+<div class="col-md-4">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@study.Id</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>@study.Title</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Cancel" class="btn" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+    Study study = new Study();
+
+    protected override async Task OnInitializedAsync()
+    {
+        study = await StudyService.SingleStudy(Convert.ToInt64(id));
+    }
+
+    protected async Task Delete()
+    {
+        await StudyService.DeleteStudy(Convert.ToInt64(id));
+        NavigationManager.NavigateTo("liststudies");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("liststudies");
+    }
+}   

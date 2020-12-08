@@ -1,0 +1,50 @@
+﻿@page "/editstudy/{id}"
+@inject NavigationManager NavigationManager
+@inject IStudyService StudyService
+
+<h2>Edit Study</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input for="Id" class="form-control" @bind="@study.Id" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="Title" class="control-label">Title</label>
+                <input for="Title" class="form-control" @bind="@study.Title" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdateStudy" value="Update" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    Study study = new Study();
+
+    protected override async Task OnInitializedAsync()
+    {
+        study = await StudyService.SingleStudy(Convert.ToInt64(id));
+    }
+
+    protected async Task UpdateStudy()
+    {
+        await StudyService.EditStudy(Convert.ToInt64(id), study);
+        NavigationManager.NavigateTo("liststudies");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("liststudies");
+    }
+}   

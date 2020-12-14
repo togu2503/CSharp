@@ -22,7 +22,7 @@ namespace WebUniversity.Controllers
         // GET: TeacherStudyJoints
         public async Task<IActionResult> Index()
         {
-            var webUniversityContext = _context.TeacherStudyJoint.Include(t => t.Study).Include(t => t.Teacher);
+            var webUniversityContext = _context.TeacherStudyJoint;
             return View(await webUniversityContext.ToListAsync());
         }
 
@@ -35,8 +35,6 @@ namespace WebUniversity.Controllers
             }
 
             var teacherStudyJoint = await _context.TeacherStudyJoint
-                .Include(t => t.Study)
-                .Include(t => t.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (teacherStudyJoint == null)
             {
@@ -136,8 +134,6 @@ namespace WebUniversity.Controllers
             }
 
             var teacherStudyJoint = await _context.TeacherStudyJoint
-                .Include(t => t.Study)
-                .Include(t => t.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (teacherStudyJoint == null)
             {

@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebUniversity;
 using WebUniversity.Models;
+using System.Web.Http.Cors;
 
 namespace WebUniversity.Api
 {
     [Route("api/[controller]")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiController]
     public class PostsController : ControllerBase
     {

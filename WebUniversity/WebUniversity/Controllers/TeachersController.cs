@@ -22,7 +22,7 @@ namespace WebUniversity.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            var webUniversityContext = _context.Teacher.Include(t => t.Post);
+            var webUniversityContext = _context.Teacher;
             return View(await webUniversityContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace WebUniversity.Controllers
             }
 
             var teacher = await _context.Teacher
-                .Include(t => t.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (teacher == null)
             {
@@ -131,7 +130,6 @@ namespace WebUniversity.Controllers
             }
 
             var teacher = await _context.Teacher
-                .Include(t => t.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (teacher == null)
             {

@@ -339,8 +339,6 @@ D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreap
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.csprojAssemblyReference.cache
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.AssemblyInfoInputs.cache
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.AssemblyInfo.cs
-D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.csproj.CoreCompileInputs.cache
-D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.MvcApplicationPartsAssemblyInfo.cache
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.RazorAssemblyInfo.cache
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.RazorAssemblyInfo.cs
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.TagHelpers.input.cache
@@ -389,3 +387,10 @@ D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreap
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.dll
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.pdb
 D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.genruntimeconfig.cache
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreapp3.1\System.Web.Cors.dll
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.csproj.CoreCompileInputs.cache
+D:\OneDrive\Studying\C#\semestr2\WebUniversity\WebUniversity\obj\Debug\netcoreapp3.1\WebUniversity.MvcApplicationPartsAssemblyInfo.cache

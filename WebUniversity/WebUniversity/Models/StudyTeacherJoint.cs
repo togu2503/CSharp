@@ -43,7 +43,5 @@ namespace WebUniversity
         public TeacherStudyJoint():this(0,0,0,0)
         {}
 
-        public virtual Teacher Teacher { get; set; }
-        public virtual Study Study { get; set; }
     }
 }

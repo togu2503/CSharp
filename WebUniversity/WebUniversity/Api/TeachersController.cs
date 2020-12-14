@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebUniversity;
+using System.Web.Http.Cors;
 using WebUniversity.Models;
 
 namespace WebUniversity.Api
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     public class TeachersController : ControllerBase

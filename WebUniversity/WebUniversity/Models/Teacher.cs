@@ -83,7 +83,5 @@ namespace WebUniversity
             res.Append(FullName);
             return res.ToString();
         }
-
-        public virtual Post Post { get; set; }
     }
 }
